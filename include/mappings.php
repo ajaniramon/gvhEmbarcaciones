@@ -94,7 +94,7 @@
 			
 			$this->_AddMapping('Embarcacion__imprimir', 'Embarcacion');
 			$this->_AddForward('Embarcacion__imprimir', 'gvHidraSuccess', 'index.php?view=views/Embarcaciones/p_Embarcacion.php&panel=buscar');
-			$this->_AddForward('Embarcacion__imprimir', 'gvHidraPrint', 'index.php?view=views/Embarcaciones/l_Embarcaciones.php');
+			$this->_AddForward('Embarcacion__imprimir', 'gvHidraPrint', 'index.php?view=views/Embarcaciones/l_Embarcacion.php');
 				
 			
 			
