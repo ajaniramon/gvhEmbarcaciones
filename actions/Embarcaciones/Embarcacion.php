@@ -426,6 +426,45 @@ query;
 	* con el metodo setOperacion.
 	*/	
 	public function accionesParticulares($str_accion, $objDatos) {
+		
+		if($str_accion == "imprimir")
+		{
+			$objDatos->setOperation('seleccionar');
+		
+				
+			//Creamos el objeto que manejará el informe
+			$informeJ = new InformeJasper('DemoEjemplo');
+				
+			//Especificamos la fuente de datos, en este caso, una BD relacional
+			$informeJ->setDataSourceType('sgbd');
+				
+			//Especificamos los parámetros relativos a la conexión con la BD relacional
+			//Si coinciden con los del DSN de IGEP, podemos importarlos con:
+			$conf = ConfigFramework::getConfig();
+			$g_dsn = $conf->getDSN('g_dsn');
+				
+			$informeJ->importPearDSN($g_dsn);
+				
+				
+			//Fijamos el fichero jasper que nos hace de plantilla
+			$informeJ->setJasperFile('./plantillasJasper/embarcaciones.jasper');
+		
+		
+			//Asignamos el informe como variable de clase para poder
+			//acceder a él desde el fichero views donde realizaremos "la ejecución"
+			$this->lanzarInforme = $informeJ;
+				
+			//Hacemos un fork de la ejecución en una nueva ventana, recuperando el forward del mapping
+			$actionForward=$objDatos->getForward('gvHidraPrint');
+			$this->openWindow($actionForward);
+		
+				
+			//Continua ejecución padre
+			$actionForward = $objDatos->getForward('gvHidraSuccess');
+			return $actionForward;
+		}
+		
+		
         
 		throw new Exception('Se ha intentado ejecutar la acción '.$str_accion.' y no está programada.');        
     }
